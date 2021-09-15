@@ -1,0 +1,473 @@
+@charset 'utf-8';
+
+$sp : 768px; // スマホ
+$bgColor: #f2f2f2;
+
+@mixin sp {
+  @media screen and (max-width: ($sp)) {
+    @content;
+  }
+}
+
+/* ------------------------------ */
+/* base
+/* ------------------------------ */
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+html {
+  font-size: 62.5%; /* 10px */
+}
+html, body,
+ul, ol, li,
+h1, h2, h3, h4, h5, h6, p, div, figure,
+table, caption, tbody, tfoot, thead, tr, th, td {
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
+  color: #333;
+  background-color: #fff;
+  letter-spacing: 0;
+  line-height: 1;
+  font-weight: normal;
+}
+li {
+  list-style: none;
+}
+a {
+  display: inline-block;
+  text-decoration: none;
+  color: #fff;
+  &:hover {
+    opacity: .7;
+    transition: .3s;
+  }
+}
+img,svg {
+  max-width: 100%;
+  height: auto;
+  vertical-align: bottom;
+}
+button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  appearance: none;
+}
+
+.pc {
+  @include sp { 
+    display: none;
+  }
+}
+.sp {
+  display: none;
+  @include sp { 
+    display: block;
+  }
+}
+
+/* ------------------------------ */
+/* layout
+/* ------------------------------ */
+.container {
+  display: block;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 30px;
+  @include sp {
+    padding: 0 4vw;
+  }
+}
+.bg-gray {
+  background-color: $bgColor;
+}
+
+/* ------------------------------ */
+/* parts
+/* ------------------------------ */
+.section-ttl {
+  font-size: 3.2rem;
+  font-weight: bold;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  @include sp {
+    font-size: 2.8rem;
+  }
+}
+.section-txt {
+  font-size: 1.6rem;
+  line-height: 2;
+}
+.btn {
+  background-color: #000;
+  width: 160px;
+  line-height: 36px;
+  font-size: 1.2rem;
+  display: block;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 30px;
+  text-transform: uppercase;
+}
+
+/* ------------------------------ */
+/* header
+/* ------------------------------ */
+.header {
+  &-ttl {
+    width: 260px;
+    position: fixed;
+    top: 30px;
+    left: 4vw;
+    z-index: 1;
+    @include sp {
+      width: 189px;
+      top: 20px;
+    }
+  }
+  &-nav {
+    font-weight: bold;
+    font-size: 2rem;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 36.1vw; /* 520px / 1440px = 36.1% */
+    text-align: center;
+    padding-top: 180px;
+    background-color: rgba(34, 34, 34, .95);
+    z-index: 2;
+    transform: translateX(100%);
+    opacity: 0;
+    transition: transform .3s, opacity .3s;
+    @include sp {
+      width: 67.7vw;
+    }
+  }
+  &-item {
+    letter-spacing: 0.068em;
+    &:first-child {
+      margin-bottom: 40px;
+    }
+    &:nth-child(n+2) {
+      margin-bottom: 30px;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  /* ハンバーガーボタン（閉） */
+  .burger-btn {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 36px;
+    right: 4vw;
+    z-index: 3;
+    @include sp {
+      top: 24px;
+    }
+    .bars {
+      .bar {
+        display: block;
+        background-color: #fff;
+        height: 2px;
+        width: 22px;
+        border-radius: 1px;
+        transition: transform .3s;
+      }
+      .bar_top {
+        transform: translateY(-4px);
+      }
+      .bar_bottom {
+        transform: translateY(4px);
+      }
+    }
+    .menu {
+      display: block;
+      font-weight: bold;
+      color: #fff;
+      margin-left: 7px;
+      text-transform: uppercase;
+    }
+    
+    /* ハンバーガーメニュー（開） */
+    .cross.bar_top {
+      transform: rotate(30deg) translateY(2px);
+    }
+    .cross.bar_mid {
+      opacity: 0;
+    }
+    .cross.bar_bottom {
+      transform: rotate(-30deg) translateY(-2px);
+    }
+  }
+  .burger-musk {
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, .5);
+    z-index: 1;
+  }
+}
+body.noscroll {
+  overflow: hidden;
+}
+
+/* アニメーションクラス */
+.open {
+  transform: translateX(0);
+  opacity: 1;
+  transition: transform .3s, opacity .3s;
+}
+.black {
+  filter: brightness(0%);
+  transition: filter .3s;
+}
+
+/* ------------------------------ */
+/* mv
+/* ------------------------------ */
+.mv {
+  height: 100vh;
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #222;
+    width: 54%; /* 780px / 1440px = 54.1% */
+    height: 100%;
+    z-index: -1;
+  }
+  &-inner {
+    width: 76.4%; /* 1100 / 1440 = 76.4% */
+    height: 86.5%; /* 640 / 740 = 86.5% */
+    background: url(../img/kv-img.jpg) no-repeat center/cover;
+    position: relative;
+  }
+  .copy-box {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(50%, -50%);
+    color: #fff;
+    @include sp {
+      right: -15%;
+      transform: translate(0, -50%);
+    }
+  }
+  .copy-txt {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 6px;
+    @include sp {
+      font-size: 1.6rem;
+    }
+  }
+  .copy-company {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    @include sp {
+      font-size: 1.6rem;
+    }
+  }
+  .copy-main {
+    font-size: 7rem;
+    line-height: 1.2;
+    font-weight: bold;
+    text-transform: uppercase;
+    @include sp {
+      font-size: 5.6rem;
+    }
+  }
+}
+
+/* ------------------------------ */
+/* about
+/* ------------------------------ */
+.about {
+  padding-top: 120px;
+  position: relative;
+  @include sp {
+    padding-top: 78px;
+  }
+  &::after {
+    content: "";
+    width: 100vw;
+    height: 160px;
+    display: block;
+    background-color: $bgColor;
+    position: absolute;
+    bottom: 0;
+    z-index: -1;
+  }
+  .container {
+    background: url(../img/about-img.jpg) no-repeat center/cover;
+    padding: 110px 0 110px 50px;
+    @include sp {
+      padding: 50px 4vw;
+    }
+  }
+  &-box {
+    max-width: 590px;
+    padding: 50px 30px;
+    background-color: rgba(255, 255, 255, .95);
+    @include sp {
+      margin: 0 auto;
+    }
+  }
+}
+
+/* ------------------------------ */
+/* works-culture
+/* ------------------------------ */
+.works-culture {
+  padding: 80px 0 60px;
+  @include sp {
+    padding: 40px 0;
+  }
+  &-inner {
+    max-width: 1100px;
+    padding: 0 30px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    @include sp {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 0 4vw;
+
+    }
+  }
+  .s-container {
+    width: 47.3%; /* 520px / 1100px = 約47.3% */
+    @include sp {
+      width: 100%;
+      max-width: 100%;
+      &:first-child {
+        margin-bottom: 40px;
+      }
+    }
+  }
+  .section-txt {
+    line-height: 1;
+  }
+  .section-img {
+    margin-bottom: 30px;
+  }
+}
+
+/* ------------------------------ */
+/* topics
+/* ------------------------------ */
+.topics {
+  padding: 60px 0;
+  @include sp {
+    padding: 40px 0;
+  }
+  &-list {
+    max-width: 700px;
+    margin-left: auto;
+    @include sp {
+      margin-left: 0;
+    }
+  }
+  &-item {
+    padding-bottom: 12px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 32px;
+    @include sp {
+      margin-bottom: 22px;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  &-date {
+    color: #cecece;
+    line-height: 3.2;
+    font-weight: bold;
+  }
+  &-ttl {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #333;
+    letter-spacing: 0.04em;
+    @include sp {
+      font-size: 1.2rem;
+      letter-spacing: 0.07em;
+      line-height: 1.7;
+    }
+  }
+  .btn {
+    margin-left: auto;
+    @include sp {
+      margin-left: 0;
+      margin-right: auto;
+    }
+  }
+}
+
+/* ------------------------------ */
+/* contact
+/* ------------------------------ */
+.contact {
+  padding: 60px 0 120px;
+  @include sp {
+    padding: 40px 0;
+  }
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    @include sp {
+      flex-direction: column-reverse;
+      align-items: flex-start;
+    }
+  }
+  &-box {
+    width: 40%; /* 440px / 1100px = 40% */
+    @include sp {
+      margin-top: 30px;
+      width: 100%;
+      max-width: 440px;
+    }
+  }
+  &-img {
+    width: 52.7%; /* 580px / 1100px = 52.7% */
+    @include sp {
+      width: 100%;
+      max-width: 520px;
+    }
+  }
+}
+
+/* ------------------------------ */
+/* footer
+/* ------------------------------ */
+.footer {
+  background-color: #525252;
+  text-align: center;
+  color: #fff;
+  letter-spacing: 0.015em;
+  small {
+    line-height: 50px;
+  }
+}

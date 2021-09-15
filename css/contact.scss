@@ -1,0 +1,420 @@
+@charset 'utf-8';
+
+$tb : 768px; // タブレット
+$sp : 375px; // スマホ
+$bgColor: #f2f2f2;
+
+@mixin tb {
+  @media screen and (max-width: ($tb)) {
+    @content;
+  }
+}
+@mixin sp {
+  @media screen and (max-width: ($sp)) {
+    @content;
+  }
+}
+
+/* ------------------------------ */
+/* base
+/* ------------------------------ */
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+html {
+  font-size: 62.5%; /* 10px */
+}
+html, body,
+ul, ol, li,
+h1, h2, h3, h4, h5, h6, p, div, figure,
+table, caption, tbody, tfoot, thead, tr, th, td, dl, dd, dt {
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
+  color: #333;
+  background-color: #fff;
+  letter-spacing: 0;
+  line-height: 1;
+  font-weight: normal;
+}
+li {
+  list-style: none;
+}
+a {
+  display: inline-block;
+  text-decoration: none;
+  color: #fff;
+  &:hover {
+    opacity: .7;
+    transition: .3s;
+  }
+}
+img,svg {
+  max-width: 100%;
+  height: auto;
+  vertical-align: bottom;
+}
+button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  appearance: none;
+}
+input, textarea {
+  resize: none;
+  appearance: none;
+  outline: none;
+  border: none;
+  width: 100%;
+}
+.btn {
+  display: block;
+  background-color: #000;
+  color: #fff;
+  width: 160px;
+  line-height: 36px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  letter-spacing: 0.14em;
+  margin: 0 auto;
+  text-align: center;
+  &:hover {
+    opacity: .7;
+    transition: .3s;
+  }
+}
+
+.pc {
+  @include sp { 
+    display: none;
+  }
+}
+.sp {
+  display: none;
+  @include sp { 
+    display: block;
+  }
+}
+/* ------------------------------ */
+/* header
+/* ------------------------------ */
+.header {
+  &-ttl {
+    width: 260px;
+    position: fixed;
+    top: 30px;
+    left: 4vw;
+    z-index: 1;
+    @include tb {
+      width: 189px;
+    }
+    @include sp {
+      top: 20px;
+    }
+  }
+  &-nav {
+    font-weight: bold;
+    font-size: 2rem;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 36.1vw; /* 520px / 1440px * 100 = 36.1% */
+    text-align: center;
+    padding-top: 180px;
+    background-color: rgba(34, 34, 34, .95);
+    z-index: 2;
+    transform: translateX(100%);
+    opacity: 0;
+    transition: transform .3s, opacity .3s;
+    @include sp {
+      width: 67.7vw;
+    }
+  }
+  &-item {
+    letter-spacing: 0.068em;
+    &:first-child {
+      margin-bottom: 40px;
+    }
+    &:nth-child(n+2) {
+      margin-bottom: 30px;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  /* ハンバーガーボタン（閉） */
+  .burger-btn {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 36px;
+    right: 4vw;
+    z-index: 3;
+    @include sp {
+      top: 24px;
+    }
+    .bars {
+      .bar {
+        display: block;
+        background-color: #fff;
+        height: 2px;
+        width: 22px;
+        border-radius: 1px;
+        transition: transform .3s;
+      }
+      .bar_top {
+        transform: translateY(-4px);
+      }
+      .bar_bottom {
+        transform: translateY(4px);
+      }
+    }
+    .menu {
+      display: block;
+      font-weight: bold;
+      color: #fff;
+      margin-left: 7px;
+      text-transform: uppercase;
+    }
+    
+    /* ハンバーガーメニュー（開） */
+    .cross.bar_top {
+      transform: rotate(30deg) translateY(2px);
+    }
+    .cross.bar_mid {
+      opacity: 0;
+    }
+    .cross.bar_bottom {
+      transform: rotate(-30deg) translateY(-2px);
+    }
+  }
+  .burger-musk {
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, .5);
+    z-index: 1;
+  }
+}
+body.noscroll {
+  overflow: hidden;
+}
+
+/* アニメーションクラス */
+.open {
+  transform: translateX(0);
+  opacity: 1;
+  transition: transform .3s, opacity .3s;
+}
+.black {
+  filter: brightness(0%);
+  transition: filter .3s;
+}
+
+/* ------------------------------ */
+/* mv
+/* ------------------------------ */
+.mv {
+  height: 60vh;
+  min-height: 464px;
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #222;
+    width: 54%;
+    height: 60vh;
+    min-height: 464px;
+    z-index: -1;
+  }
+  &-inner {
+    background: url(../img/heading-img_contact.jpg) no-repeat center/cover;
+    position: relative;
+    width: 76.4%; /* 1100px / 1440px = 7約76.4% */
+    height: 83.4%; /* 387px / 464px = 約83.4% */
+  }
+  .page-ttl {
+    font-size: 7.2rem;
+    font-weight: bold;
+    letter-spacing: 0.063em;
+    text-transform: uppercase;
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(50%, -50%);
+    @include tb {
+      font-size: 5.2rem;
+      transform: translate(28%, -50%);
+    }
+    span {
+      font-size: 2.0rem;
+      font-weight: normal;
+      letter-spacing: 0.05em;
+      margin-top: 5px;
+      display: block;
+      @include tb {
+        font-size: 1.6rem;
+      }
+    }
+  }
+}
+
+/* ------------------------------ */
+/* contact
+/* ------------------------------ */
+.contact {
+  padding: 120px 0;
+  @include sp {
+    padding: 80px 0;
+  }
+  &-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 50px;
+    @include tb {
+      padding: 0 4vw;
+    }
+  }
+  &-txt {
+    margin-bottom: 55px;
+    font-size: 1.6rem;
+    letter-spacing: 0.04em;
+    line-height: 1.5;
+    @include sp {
+      font-size: 1.4rem;
+      line-height: 1.7;
+    }
+  }
+  .form-item {
+    margin-bottom: 45px;
+  }
+  .form-ttl {
+    font-size: 1.6rem;
+    letter-spacing: 0.04em;
+    margin-bottom: 12px;
+    .must {
+      font-size: 1.2rem;
+      letter-spacing: 0.04em;
+      display: inline-block;
+      background-color: #333;
+      color: #fff;
+      padding: 4px 5px;
+      margin-left: 10px;
+    }
+  }
+  .radio-list {
+    display: flex;
+    @include sp {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-left: 10px;
+    }
+  }
+  .radio-item {
+    font-size: 1.6rem;
+    letter-spacing: 0.04em;
+    margin-right: 50px;
+    @include sp {
+      font-size: 1.4rem;
+      margin-right: 0;
+      margin-bottom: 15px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  .radio-btn {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #333;
+    border-radius: 50%;
+    vertical-align: -4px;
+    &:checked {
+      background-color: #333;
+      border: 4px solid #fff;
+      box-shadow: 0 0 0 1px #333;
+    }
+  }
+  .text-box, .textarea {
+    display: block;
+    border: 1px solid #333;
+    padding: 10px;
+    font-size: 1.6rem;
+  }
+  .privacy-policy-ttl {
+    font-size: 1.6rem;
+    letter-spacing: 0.04em;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .privacy-policy-box {
+    border: 1px solid #333;
+    padding: 10px;
+    height: 250px;
+    overflow: scroll;
+    margin-bottom: 43px;
+  }
+  .privacy-policy-txt {
+    font-size: 1.6rem;
+    letter-spacing: 0.04em;
+    line-height: 1.5;
+    @include sp {
+      font-size: 1.4rem;
+      line-height: 1.7;
+    }
+  }
+  .confirm {
+    text-align: center;
+    margin-bottom: 45px;
+  }
+  .check-box {
+    border: 1px solid #333;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    vertical-align: -6px;
+    @include sp {
+      width: 16px;
+      height: 16px;
+    }
+    &:checked {
+      background: url(../img/icon_chek.svg) no-repeat center/14px;
+    }
+  }
+  .check-txt {
+    font-size: 1.6rem;
+    letter-spacing: 0.04em;
+    @include sp {
+      font-size: 1.4rem;
+    }
+  }
+}
+
+
+/* ------------------------------ */
+/* footer
+/* ------------------------------ */
+.footer {
+  background-color: #525252;
+  text-align: center;
+  color: #fff;
+  letter-spacing: 0.015em;
+  small {
+    line-height: 50px;
+  }
+}
